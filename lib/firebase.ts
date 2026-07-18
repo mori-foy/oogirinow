@@ -7,18 +7,18 @@ import { getFirestore } from "firebase/firestore";
 const firebaseConfig = {
   apiKey:
     process.env.NEXT_PUBLIC_FIREBASE_API_KEY ??
-    "AIzaSyAnXKl8jh_BolDbhxk971Kmme_4m5xRGeY",
+    "AIzaSyC8CdmWDjvmay1bJG_HYZiwyFFJu0DnG1c",
   authDomain:
-    process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN ?? "senryunow.firebaseapp.com",
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ?? "senryunow",
+    process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN ?? "oogirinow.firebaseapp.com",
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ?? "oogirinow",
   storageBucket:
     process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET ??
-    "senryunow.firebasestorage.app",
+    "oogirinow.firebasestorage.app",
   messagingSenderId:
-    process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID ?? "657878995669",
+    process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID ?? "888511527880",
   appId:
     process.env.NEXT_PUBLIC_FIREBASE_APP_ID ??
-    "1:657878995669:web:303014d791bb881f9a885c",
+    "1:888511527880:web:70b59b52b83de828f05efd",
 };
 
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];

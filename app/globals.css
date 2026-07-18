@@ -6,6 +6,8 @@
   --accent: #3A7D55;
   --sub: #2C4A7C;
   --border: #D4C9B8;
+  /* 旧・筆文字フォント変数。全体をゴシックに統一したため本文と同じスタックを指す */
+  --font-kaisei: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
 }
 
 @theme inline {

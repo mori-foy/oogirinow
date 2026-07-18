@@ -39,7 +39,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (e) {
+      const err = e as { code?: string; message?: string };
+      // ユーザーが自分でポップアップを閉じただけの場合は通知しない
+      if (
+        err.code === "auth/popup-closed-by-user" ||
+        err.code === "auth/cancelled-popup-request"
+      ) {
+        return;
+      }
+      console.error("ログインエラー:", err.code, err.message);
+      alert(`ログインに失敗しました (${err.code ?? "不明なエラー"})`);
+    }
   };
 
   const signOut = async () => {

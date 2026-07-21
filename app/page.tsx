@@ -118,8 +118,8 @@ export default function HomePage() {
     return (
       <main className="min-h-screen flex flex-col items-center justify-center px-4 py-8 max-w-md mx-auto">
         <Image
-          src="/logo_senryunow.png"
-          alt="川柳なう。"
+          src="/logo_oogirinow.png"
+          alt="大喜利なう。"
           width={240}
           height={80}
           className="mx-auto mb-10"
@@ -186,8 +186,8 @@ export default function HomePage() {
       {/* Header */}
       <div className="text-center mb-4">
         <Image
-          src="/logo_senryunow.png"
-          alt="川柳なう。"
+          src="/logo_oogirinow.png"
+          alt="大喜利なう。"
           width={240}
           height={80}
           className="mx-auto"

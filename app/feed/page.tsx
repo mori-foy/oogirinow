@@ -63,8 +63,8 @@ export default function FeedPage() {
       <div className="flex items-center justify-between mb-6">
         <div className="w-20" />
         <Image
-          src="/logo_senryunow.png"
-          alt="川柳なう。"
+          src="/logo_oogirinow.png"
+          alt="大喜利なう。"
           width={140}
           height={46}
           priority

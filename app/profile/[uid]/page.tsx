@@ -235,9 +235,9 @@ export default function PublicProfilePage({
           className="text-sm font-bold text-[#1A1A1A] mb-3"
           style={{ fontFamily: "var(--font-kaisei)" }}
         >
-          過去の句
+          過去の投稿
           {postsLoaded && (
-            <span className="text-gray-400 font-normal ml-2">{posts.length}句</span>
+            <span className="text-gray-400 font-normal ml-2">{posts.length}件</span>
           )}
         </h2>
 

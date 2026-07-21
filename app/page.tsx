@@ -26,47 +26,12 @@ export default function HomePage() {
   const [answer, setAnswer] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const odai = getTodayOdai();
-  const [location, setLocation] = useState<string | null>(null);
-  const [locationLoading, setLocationLoading] = useState(false);
   const [inAppBrowser, setInAppBrowser] = useState(false);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     setInAppBrowser(detectInAppBrowser());
   }, []);
-
-  const handleGetLocation = () => {
-    if (!navigator.geolocation) {
-      setLocation("不明");
-      return;
-    }
-    setLocationLoading(true);
-    navigator.geolocation.getCurrentPosition(
-      async (pos) => {
-        try {
-          const { latitude, longitude } = pos.coords;
-          const res = await fetch(
-            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=ja`
-          );
-          const data = await res.json();
-          const prefecture = data.principalSubdivision ?? "";
-          const city = data.city ?? "";
-          const locality = data.locality ?? "";
-          const parts = [...new Set([prefecture, city, locality].filter(Boolean))];
-          setLocation(parts.length > 0 ? parts.join(" ") : "不明");
-        } catch {
-          setLocation("不明");
-        } finally {
-          setLocationLoading(false);
-        }
-      },
-      (err) => {
-        setLocation("不明");
-        setLocationLoading(false);
-      },
-      { timeout: 10000, enableHighAccuracy: false }
-    );
-  };
 
   const isValid = answer.trim().length > 0;
 
@@ -81,7 +46,7 @@ export default function HomePage() {
         [answer.trim()],
         "senryu",
         false,
-        location
+        null
       );
       setPosted();
       router.push("/feed");
@@ -199,31 +164,6 @@ export default function HomePage() {
       />
 
       <div className="flex-1" />
-
-      {/* Location */}
-      <div className="flex items-center gap-2 mt-3 mb-1">
-        {location === null ? (
-          <button
-            onClick={handleGetLocation}
-            disabled={locationLoading}
-            className="flex items-center gap-1.5 text-sm text-gray-500 border border-gray-300 rounded-xl px-3 py-2 active:scale-95 transition-all"
-          >
-            <span>📍</span>
-            <span>{locationLoading ? "取得中..." : "位置情報を取得する"}</span>
-          </button>
-        ) : (
-          <div className="flex items-center gap-2 text-sm text-gray-600 border border-[#3A7D55]/40 bg-[#3A7D55]/5 rounded-xl px-3 py-2">
-            <span>📍</span>
-            <span>{location}</span>
-            <button
-              onClick={() => setLocation(null)}
-              className="ml-1 text-gray-400 text-xs"
-            >
-              ✕
-            </button>
-          </div>
-        )}
-      </div>
 
       {/* Submit button */}
       <button

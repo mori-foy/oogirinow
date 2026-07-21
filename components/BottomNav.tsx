@@ -8,9 +8,10 @@ const items = [
     href: "/feed",
     icon: (active: boolean) => (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M17 3H7a2 2 0 0 0-2 2v14l3.5-2 3.5 2 3.5-2 3.5 2V5a2 2 0 0 0-2-2z" />
-        <line x1="9" y1="9" x2="15" y2="9" />
-        <line x1="9" y1="13" x2="13" y2="13" />
+        <circle cx="9" cy="8" r="3" />
+        <path d="M3.5 19c0-3.3 2.5-6 5.5-6s5.5 2.7 5.5 6" />
+        <circle cx="17" cy="9" r="2.3" />
+        <path d="M15.5 13.2c2.4.3 4 2.4 4 5.8" />
       </svg>
     ),
   },

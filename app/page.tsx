@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import CountdownTimer from "@/components/CountdownTimer";
-import HaikuBuilder from "@/components/HaikuBuilder";
 import { useAppStore } from "@/store/useAppStore";
 import { useAuth } from "@/context/AuthContext";
 import { createPost } from "@/lib/firestore";
+import { getTodayOdai } from "@/data/odai";
 
 function detectInAppBrowser(): boolean {
   if (typeof window === "undefined") return false;
@@ -23,11 +23,9 @@ export default function HomePage() {
   const { isExpired, hasPosted, setPosted } = useAppStore();
   const { user, loading, signInWithGoogle } = useAuth();
 
-  const [isValid, setIsValid] = useState(false);
-  const [pendingLines, setPendingLines] = useState<string[]>(["", "", ""]);
-  const [poemMode, setPoemMode] = useState<"senryu" | "tanka">("senryu");
-  const [jiari, setJiari] = useState(false);
+  const [answer, setAnswer] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const odai = getTodayOdai();
   const [location, setLocation] = useState<string | null>(null);
   const [locationLoading, setLocationLoading] = useState(false);
   const [inAppBrowser, setInAppBrowser] = useState(false);
@@ -70,15 +68,7 @@ export default function HomePage() {
     );
   };
 
-  const handleValidChange = useCallback(
-    (valid: boolean, lines: string[], mode: "senryu" | "tanka", newJiari: boolean) => {
-      setIsValid(valid);
-      setPendingLines(lines);
-      setPoemMode(mode);
-      setJiari(newJiari);
-    },
-    []
-  );
+  const isValid = answer.trim().length > 0;
 
   const handleSubmit = async () => {
     if (!isValid || isExpired || !user) return;
@@ -88,9 +78,9 @@ export default function HomePage() {
         user.uid,
         user.displayName ?? "名無し",
         user.photoURL ?? "",
-        pendingLines,
-        poemMode,
-        jiari,
+        [answer.trim()],
+        "senryu",
+        false,
         location
       );
       setPosted();
@@ -193,42 +183,33 @@ export default function HomePage() {
           className="mx-auto"
           priority
         />
-        <p className="text-xs text-gray-400 mt-1">今日の一句を詠んでください</p>
-        <p className="text-xs text-gray-400 mt-0.5">ひらがなで入力すると文字数が正確に反映されます</p>
       </div>
 
       {/* Countdown */}
       <CountdownTimer />
 
-      {/* Input area */}
-      <div className="flex-1">
-        <HaikuBuilder onValidChange={handleValidChange} />
+      {/* Odai */}
+      <div className="mt-6 mb-4 p-5 bg-white/70 rounded-2xl border border-[#D4C9B8] text-center">
+        <p className="text-xs text-gray-400 mb-2">お題</p>
+        <p
+          className="text-xl text-[#1A1A1A] font-bold"
+          style={{ fontFamily: "var(--font-kaisei)" }}
+        >
+          {odai}
+        </p>
       </div>
 
-      {/* Preview — vertical writing */}
-      {isValid && (
-        <div className="my-4 p-4 bg-white/70 rounded-2xl border border-[#D4C9B8] ink-appear">
-          <p className="text-xs text-gray-400 mb-3 text-center">プレビュー</p>
-          <div
-            className="flex flex-row-reverse justify-center gap-6"
-            style={{ height: poemMode === "tanka" ? "160px" : "110px" }}
-          >
-            {pendingLines.map((line, i) => (
-              <div
-                key={i}
-                className="text-xl text-[#1A1A1A] leading-loose"
-                style={{
-                  writingMode: "vertical-rl",
-                  textOrientation: "mixed",
-                  fontFamily: "var(--font-kaisei)",
-                }}
-              >
-                {line}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* Answer */}
+      <textarea
+        value={answer}
+        onChange={(e) => setAnswer(e.target.value)}
+        placeholder="アンサーを入力してください"
+        rows={4}
+        className="w-full p-4 rounded-2xl border border-[#D4C9B8] bg-white/70 text-[#1A1A1A] text-base placeholder:text-gray-300 focus:outline-none focus:border-[#3A7D55] resize-none"
+        style={{ fontFamily: "var(--font-kaisei)" }}
+      />
+
+      <div className="flex-1" />
 
       {/* Location */}
       <div className="flex items-center gap-2 mt-3 mb-1">
@@ -266,7 +247,7 @@ export default function HomePage() {
         }`}
         style={{ fontFamily: "var(--font-kaisei)" }}
       >
-        {submitting ? "詠んでいます..." : "この句を投稿する"}
+        {submitting ? "投稿しています..." : "回答する"}
       </button>
     </main>
   );

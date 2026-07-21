@@ -30,7 +30,7 @@ export default function OdaiPanel({ odai }: { odai: string }) {
       <div className="flex flex-col items-center">
         <div className="bg-[#5C4326] text-white rounded-lg px-5 py-1.5 shadow-md">
           <span className="font-mono font-bold text-lg tracking-widest">
-            {isExpired ? "終了" : timeStr}
+            {isExpired ? "時間切れ" : timeStr}
           </span>
         </div>
         <div className="w-1 h-3 bg-[#5C4326]" />
@@ -43,8 +43,8 @@ export default function OdaiPanel({ odai }: { odai: string }) {
           background: `conic-gradient(${gaugeColor} ${progress * 360}deg, #E0DACB ${progress * 360}deg 360deg)`,
         }}
       >
-        <div className="p-5 rounded-[13px] text-center flex flex-col justify-center bg-[#F5F0E8]">
-          <p className="text-xs text-gray-400 mb-2">お題</p>
+        <div className="p-5 rounded-[13px] text-center flex flex-col justify-center bg-white">
+          <p className="text-xs text-gray-400 mb-2">本日のお題</p>
           <p
             className="text-xl text-[#1A1A1A] font-bold"
             style={{ fontFamily: "var(--font-kaisei)" }}

@@ -1,0 +1,11 @@
+// JST (UTC+9) に変換し、15:00 JST を日付の境界にする
+export function todayString(now: Date = new Date()): string {
+  const jst = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+  if (jst.getUTCHours() < 15) {
+    jst.setUTCDate(jst.getUTCDate() - 1);
+  }
+  const y = jst.getUTCFullYear();
+  const m = String(jst.getUTCMonth() + 1).padStart(2, "0");
+  const d = String(jst.getUTCDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}

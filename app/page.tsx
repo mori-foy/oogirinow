@@ -6,8 +6,7 @@ import Image from "next/image";
 import OdaiPanel from "@/components/OdaiPanel";
 import { useAppStore } from "@/store/useAppStore";
 import { useAuth } from "@/context/AuthContext";
-import { createPost } from "@/lib/firestore";
-import { getTodayOdai } from "@/data/odai";
+import { createPost, subscribeTodayOdai } from "@/lib/firestore";
 
 function detectInAppBrowser(): boolean {
   if (typeof window === "undefined") return false;
@@ -20,12 +19,12 @@ function detectInAppBrowser(): boolean {
 
 export default function HomePage() {
   const router = useRouter();
-  const { isExpired, hasPosted, setPosted } = useAppStore();
+  const { setPosted } = useAppStore();
   const { user, loading, signInWithGoogle } = useAuth();
 
   const [answer, setAnswer] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const odai = getTodayOdai();
+  const [odai, setOdai] = useState<string | null>(null);
   const [inAppBrowser, setInAppBrowser] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -33,10 +32,14 @@ export default function HomePage() {
     setInAppBrowser(detectInAppBrowser());
   }, []);
 
+  useEffect(() => {
+    return subscribeTodayOdai(setOdai);
+  }, []);
+
   const isValid = answer.trim().length > 0;
 
   const handleSubmit = async () => {
-    if (!isValid || isExpired || !user) return;
+    if (!isValid || !user) return;
     setSubmitting(true);
     try {
       await createPost(
@@ -119,23 +122,6 @@ export default function HomePage() {
     );
   }
 
-  if (isExpired && !hasPosted) {
-    return (
-      <main className="min-h-screen flex flex-col items-center justify-center px-4 py-8 max-w-md mx-auto">
-        <div className="text-center">
-          <p className="text-6xl mb-4">⏰</p>
-          <h1
-            className="text-2xl font-bold text-[#1A1A1A] mb-2"
-            style={{ fontFamily: "var(--font-kaisei)" }}
-          >
-            今日の句は終わりました
-          </h1>
-          <p className="text-gray-500">また明日、川柳を詠んでください。</p>
-        </div>
-      </main>
-    );
-  }
-
   return (
     <main className="min-h-screen flex flex-col px-4 pt-8 pb-6 max-w-md mx-auto">
       {/* Header */}
@@ -151,7 +137,7 @@ export default function HomePage() {
       </div>
 
       {/* Odai + timer */}
-      <OdaiPanel odai={odai} />
+      <OdaiPanel odai={odai ?? "読み込み中..."} />
 
       {/* Answer */}
       <textarea
@@ -166,9 +152,9 @@ export default function HomePage() {
       {/* Submit button */}
       <button
         onClick={handleSubmit}
-        disabled={!isValid || isExpired || submitting}
+        disabled={!isValid || submitting}
         className={`w-full py-4 rounded-2xl text-lg font-bold transition-all duration-200 mt-3 ${
-          isValid && !isExpired
+          isValid
             ? "bg-[#3A7D55] text-white shadow-lg active:scale-95"
             : "bg-gray-200 text-gray-400 cursor-not-allowed"
         }`}

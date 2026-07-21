@@ -6,7 +6,8 @@ import Image from "next/image";
 import OdaiPanel from "@/components/OdaiPanel";
 import { useAppStore } from "@/store/useAppStore";
 import { useAuth } from "@/context/AuthContext";
-import { createPost, subscribeTodayOdai } from "@/lib/firestore";
+import { createPost } from "@/lib/firestore";
+import { todayOdai } from "@/data/odai";
 
 function detectInAppBrowser(): boolean {
   if (typeof window === "undefined") return false;
@@ -24,16 +25,11 @@ export default function HomePage() {
 
   const [answer, setAnswer] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [odai, setOdai] = useState<string | null>(null);
   const [inAppBrowser, setInAppBrowser] = useState(false);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     setInAppBrowser(detectInAppBrowser());
-  }, []);
-
-  useEffect(() => {
-    return subscribeTodayOdai(setOdai);
   }, []);
 
   const isValid = answer.trim().length > 0;
@@ -137,7 +133,7 @@ export default function HomePage() {
       </div>
 
       {/* Odai + timer */}
-      <OdaiPanel odai={odai ?? "読み込み中..."} />
+      <OdaiPanel odai={todayOdai} />
 
       {/* Answer */}
       <textarea

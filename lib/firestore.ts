@@ -64,12 +64,6 @@ export function createPost(
   });
 }
 
-export function subscribeTodayOdai(callback: (odai: string | null) => void) {
-  return onSnapshot(doc(db, "odai", todayString()), (snap) => {
-    callback((snap.data()?.text as string) ?? null);
-  });
-}
-
 export function subscribeTodayPosts(
   callback: (posts: FirestorePost[]) => void
 ) {

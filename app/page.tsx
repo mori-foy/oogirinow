@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import CountdownTimer from "@/components/CountdownTimer";
+import OdaiPanel from "@/components/OdaiPanel";
 import { useAppStore } from "@/store/useAppStore";
 import { useAuth } from "@/context/AuthContext";
 import { createPost } from "@/lib/firestore";
@@ -172,7 +172,7 @@ export default function HomePage() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col px-4 pt-16 pb-6 max-w-md mx-auto">
+    <main className="min-h-screen flex flex-col px-4 pt-8 pb-6 max-w-md mx-auto">
       {/* Header */}
       <div className="text-center mb-4">
         <Image
@@ -185,19 +185,8 @@ export default function HomePage() {
         />
       </div>
 
-      {/* Countdown */}
-      <CountdownTimer />
-
-      {/* Odai */}
-      <div className="mt-6 mb-4 p-5 bg-white/70 rounded-2xl border border-[#D4C9B8] text-center">
-        <p className="text-xs text-gray-400 mb-2">お題</p>
-        <p
-          className="text-xl text-[#1A1A1A] font-bold"
-          style={{ fontFamily: "var(--font-kaisei)" }}
-        >
-          {odai}
-        </p>
-      </div>
+      {/* Odai + timer */}
+      <OdaiPanel odai={odai} />
 
       {/* Answer */}
       <textarea

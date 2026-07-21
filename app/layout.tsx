@@ -5,7 +5,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "大喜利なう。",
-  description: "1日1回、5分で川柳を詠む",
+  description: "1日1回、5分で大喜利に回答する",
 };
 
 export default function RootLayout({

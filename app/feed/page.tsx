@@ -99,7 +99,7 @@ export default function FeedPage() {
                 className="text-xl font-bold text-[#1A1A1A] mb-2"
                 style={{ fontFamily: "var(--font-kaisei)" }}
               >
-                まだ今日の句を詠んでいません
+                まだ今日は回答していません
               </h2>
               <p className="text-sm text-gray-500 mb-6">
                 投稿するとみんなの句が読めます
@@ -109,7 +109,7 @@ export default function FeedPage() {
                 className="w-full py-4 rounded-2xl text-base font-bold bg-[#3A7D55] text-white shadow-lg active:scale-95 transition-all duration-200"
                 style={{ fontFamily: "var(--font-kaisei)" }}
               >
-                本日の一句を詠む
+                本日のお題に回答する
               </button>
             </div>
           </div>

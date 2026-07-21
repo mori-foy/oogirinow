@@ -103,7 +103,7 @@ export default function HomePage() {
         ) : (
           <>
             <p className="text-gray-500 mb-8 text-sm text-center">
-              今日の一句を詠むには<br />ログインしてください
+              今日のお題に回答するには<br />ログインしてください
             </p>
             <button
               onClick={signInWithGoogle}

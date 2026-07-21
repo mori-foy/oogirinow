@@ -53,16 +53,19 @@ export default function BottomNav() {
               <button
                 key={href}
                 onClick={() => router.push(href)}
-                className="flex flex-col items-center gap-1 -translate-y-4"
+                className="flex flex-col items-center gap-1.5 -translate-y-3"
               >
                 <span
-                  className={`flex items-center justify-center w-14 h-14 rounded-full shadow-lg transition-all ${
-                    active
-                      ? "bg-[#3A7D55] text-white scale-105"
-                      : "bg-[#3A7D55] text-white active:scale-95"
-                  }`}
+                  className="flex items-center justify-center w-14 h-14 rounded-full bg-[#2C6142] transition-all duration-100 shadow-[0_4px_0_#1F4630,0_6px_8px_rgba(0,0,0,0.25)] active:translate-y-[3px] active:shadow-[0_1px_0_#1F4630,0_2px_4px_rgba(0,0,0,0.2)]"
                 >
-                  {icon(true)}
+                  <span
+                    className="flex items-center justify-center w-11 h-11 rounded-full text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)]"
+                    style={{
+                      background: "linear-gradient(180deg, #4B9A6C 0%, #3A7D55 100%)",
+                    }}
+                  >
+                    {icon(true)}
+                  </span>
                 </span>
                 <span
                   className={`text-[10px] font-medium leading-none ${

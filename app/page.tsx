@@ -163,13 +163,11 @@ export default function HomePage() {
         style={{ fontFamily: "var(--font-kaisei)" }}
       />
 
-      <div className="flex-1" />
-
       {/* Submit button */}
       <button
         onClick={handleSubmit}
         disabled={!isValid || isExpired || submitting}
-        className={`w-full py-4 rounded-2xl text-lg font-bold transition-all duration-200 mt-2 ${
+        className={`w-full py-4 rounded-2xl text-lg font-bold transition-all duration-200 mt-3 ${
           isValid && !isExpired
             ? "bg-[#3A7D55] text-white shadow-lg active:scale-95"
             : "bg-gray-200 text-gray-400 cursor-not-allowed"

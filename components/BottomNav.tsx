@@ -15,7 +15,7 @@ const items = [
     ),
   },
   {
-    label: "詠む",
+    label: "回答する",
     href: "/",
     icon: (active: boolean) => (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round">
@@ -43,9 +43,38 @@ export default function BottomNav() {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-t border-[#D4C9B8]">
-      <div className="max-w-md mx-auto flex items-center justify-around px-2 py-2 pb-[env(safe-area-inset-bottom)]">
+      <div className="max-w-md mx-auto flex items-end justify-around px-2 py-2 pb-[env(safe-area-inset-bottom)]">
         {items.map(({ label, href, icon }) => {
           const active = pathname === href;
+          const isCenter = href === "/";
+
+          if (isCenter) {
+            return (
+              <button
+                key={href}
+                onClick={() => router.push(href)}
+                className="flex flex-col items-center gap-1 -translate-y-4"
+              >
+                <span
+                  className={`flex items-center justify-center w-14 h-14 rounded-full shadow-lg transition-all ${
+                    active
+                      ? "bg-[#3A7D55] text-white scale-105"
+                      : "bg-[#3A7D55] text-white active:scale-95"
+                  }`}
+                >
+                  {icon(true)}
+                </span>
+                <span
+                  className={`text-[10px] font-medium leading-none ${
+                    active ? "text-[#3A7D55]" : "text-gray-400"
+                  }`}
+                >
+                  {label}
+                </span>
+              </button>
+            );
+          }
+
           return (
             <button
               key={href}
